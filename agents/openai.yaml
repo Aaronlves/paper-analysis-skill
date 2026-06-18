@@ -1,0 +1,4 @@
+interface:
+  display_name: "Paper Analysis"
+  short_description: "Analyze academic papers argumentatively."
+  default_prompt: "Read this paper in full, reconstruct its argument, assess its support and objections, and explain its relevance to my project."
