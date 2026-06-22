@@ -62,6 +62,62 @@ agents/openai.yaml    Codex UI metadata
 
 This repository is intentionally project-neutral. For a full research workflow, keep this general skill unchanged and create a separate private skill that supplies your dissertation or project context. This prevents personal research information from entering a public fork and makes updates to the base skill easier to adopt.
 
+### Recommended Private Project Architecture
+
+The public skill supplies the reusable method. The private extension connects that method to a private research workspace without copying project information into the public repository.
+
+```mermaid
+flowchart LR
+    subgraph Public["Public and reusable"]
+        Base["paper-analysis<br/>general reading and analysis method"]
+    end
+
+    subgraph Private["Private research workspace"]
+        Extension["project-paper-analysis<br/>private extension"]
+        Context["Project context<br/>thesis, concepts, open questions"]
+        Policy["Workspace policy<br/>paths, naming, write permissions"]
+        Sources["Research materials<br/>papers, notes, verified sources"]
+        Reports["Paper analyses<br/>triage and full reports"]
+        Knowledge["Project knowledge base<br/>arguments, objections, chapters"]
+    end
+
+    Base --> Extension
+    Context --> Extension
+    Policy --> Extension
+    Sources --> Extension
+    Extension --> Reports
+    Extension --> Knowledge
+```
+
+A practical folder layout can look like this:
+
+```text
+private-research-project/
+├── AGENTS.md                         # Tells Codex to use both skills
+├── project-control/
+│   ├── project-memory.md             # Stable commitments only
+│   ├── project-status.md             # Current phase and priorities
+│   └── workflow.md                   # Research and writing procedure
+├── concepts/                         # Definitions and distinctions
+├── arguments/                        # Premises and supporting arguments
+├── objections-and-replies/           # Live objections and responses
+├── chapters-or-sections/             # Draft prose
+├── paper-analyses/                   # Saved triage and full reports
+├── literature-map/                   # Debate and historical placement
+├── bibliography/                     # Verified project references
+└── .private-skills/
+    └── project-paper-analysis/
+        ├── SKILL.md                  # Concise controller
+        ├── agents/
+        │   └── openai.yaml           # Codex UI metadata
+        └── references/
+            ├── project-context.md    # Stable vs. tentative project claims
+            ├── report-templates.md   # Project-specific output formats
+            └── workspace-policy.md   # Paths, writes, and privacy rules
+```
+
+The names are illustrative. Use paths appropriate to your system, make the extension folder match the skill's `name`, and ensure `AGENTS.md` or your Codex configuration points to the private extension. Keep the whole project outside public repositories unless you have deliberately removed sensitive material.
+
 Copy the prompt below into Codex. Replace the bracketed fields with your own information, and provide the relevant project files when asked. If the material is sensitive, keep the resulting extension outside any public repository.
 
 ```text
