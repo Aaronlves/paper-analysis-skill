@@ -176,7 +176,6 @@ Use this full structure for a thorough analysis unless the user's project suppli
 ### Verified Sources Worth Using
 ### Follow-Up Leads Requiring Verification
 ## 10. Problems and Open Questions
-## References
 ```
 
 Use this structure for a concise triage report:
@@ -190,7 +189,6 @@ Use this structure for a concise triage report:
 ## Limited Project Relevance
 ## References Worth Following
 ## Open Questions
-## References
 ```
 
 Adapt headings to the paper's genre without omitting the required substance. If saving a file, use a descriptive ASCII filename such as `<author-year-keywords>.md` unless the project has an established convention.
