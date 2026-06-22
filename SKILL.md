@@ -18,6 +18,7 @@ Use related skills when available: use `pdf` for PDF extraction and visual check
 - Tie major premises to the evidence or argument offered for them.
 - Support paper-specific and contested claims with page citations whenever pagination is available.
 - Never invent quotations, page numbers, bibliography entries, DOI values, evidence, or argumentative steps.
+- You are allowed to say “I don't know” or “I am not sure” if you are uncertain about the relevant information.
 - Use the user's requested citation style. If none is specified, use APA 7.
 - Preserve source files, notes, and unrelated workspace materials.
 - Treat current local files as authoritative when they differ from memory or prior summaries.
