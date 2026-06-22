@@ -1,180 +1,227 @@
 ---
 name: paper-analysis
-description: Systematically read and analyze academic papers, especially philosophy papers. Use when the user provides a paper, PDF, citation, abstract, notes, or text and asks for paper analysis, argument reconstruction, thesis extraction, objection and reply mapping, literature-review placement, bibliography extraction, source screening, or project relevance assessment.
+description: Systematically triage, read, and analyze academic papers, especially philosophy papers. Use when the user provides a paper, PDF, citation, abstract, notes, or text and asks for relevance scoring, paper analysis, argument reconstruction, thesis extraction, concept analysis, objection and reply mapping, evidence assessment, historical placement, literature-review placement, bibliography screening, or project relevance assessment.
 ---
 
 # Paper Analysis
 
-Use this skill to analyze papers as arguments, not as neutral summaries. Preserve the difference between what the author argues, what the evidence supports, and what the user or project should take from the paper.
+Analyze papers as arguments and contributions to a knowledge base, not as neutral summaries. Preserve the differences among what the author argues, what the evidence supports, what other sources report, and what the user or project should take from the paper.
 
-Use related skills when available: use `pdf` for PDF extraction and visual checks, `zotero` for citation records, `philosophy-writing` for philosophical argument standards, and any user-provided project or literature-review skill for local research context.
+Use related skills when available: use `pdf` for PDF extraction and visual checks, `zotero` for citation records, `philosophy-writing` for philosophical standards, and any user-provided project or literature-review skill for local context and output rules.
 
 ## Core Commitments
 
-- Read the full paper before finalizing the analysis when the full text is available. Do not infer the whole argument from the abstract or introduction.
-- Distinguish the author's claims from the user's assessment or project use.
-- Reconstruct the strongest plausible version of the argument before criticizing it.
-- Support paper-specific claims with page citations whenever pagination is available.
-- Never invent quotations, page numbers, bibliography entries, DOI values, or argumentative steps.
-- Use the user's requested citation style. If none is specified, use APA 7 for references.
-- Preserve source PDFs, notes, and unrelated workspace files.
+- Survey the whole paper before rating or reporting on it. Do not infer the argument from the abstract or introduction alone.
+- Read closely before giving a full analysis when the full text is available.
+- Distinguish the author's claims from the analyst's assessment and the user's project commitments.
+- Reconstruct the strongest plausible version of an argument before criticizing it.
+- Tie major premises to the evidence or argument offered for them.
+- Support paper-specific and contested claims with page citations whenever pagination is available.
+- Never invent quotations, page numbers, bibliography entries, DOI values, evidence, or argumentative steps.
+- Use the user's requested citation style. If none is specified, use APA 7.
+- Preserve source files, notes, and unrelated workspace materials.
 - Treat current local files as authoritative when they differ from memory or prior summaries.
 
-If the user only provides an abstract or excerpt, state that the analysis is provisional and limited to the supplied material.
+If the user provides only an abstract or excerpt, state that the analysis is provisional and limited to the supplied material. Do not apply a full-text reading claim.
 
-## Workflow
+## Use Two Reading Passes
 
-### 1. Identify the Source
+### Pass 1: Identify, Survey, and Rate
 
 Record, when available:
 
-- Title, author, year, venue, DOI, stable URL, and page range.
-- Paper type: article, book chapter, conference paper, preprint, review essay, reply, commentary, or dissertation chapter.
-- Version status: published, accepted manuscript, preprint, draft, or unknown.
-- Whether the file has reliable selectable text, page numbers, notes, bibliography, figures, or appendices.
+- record title, author, year, venue, DOI or stable identifier, and page range;
+- paper type: article, chapter, conference paper, preprint, review essay, reply, commentary, or dissertation chapter;
+- version status: published, accepted manuscript, preprint, draft, or unknown;
+- whether the file has reliable selectable text, pagination, notes, bibliography, figures, or appendices.
 
-If the PDF is scanned or extraction is unreliable, use OCR or page rendering and visually verify crucial passages before relying on them.
+If extraction is unreliable, use OCR or page rendering and visually verify crucial passages.
 
-### 2. Read for Structure
+Survey the whole paper:
+
+1. Read the abstract, introduction, conclusion, headings, and explicit statements of thesis and structure.
+2. Skim every section.
+3. Inspect passages containing the principal arguments, objections, evidence, conceptual machinery, and historical framing.
+4. Record the central question, thesis, dialectical target, main argumentative route, and likely project use.
+
+When the user has a research project, rate prospective project relevance from 0 to 5 and explain the rating:
+
+- `0`: no identifiable use.
+- `1`: remote topical overlap.
+- `2`: limited background or bibliographic use.
+- `2.5`: borderline; no clear argumentative role yet.
+- `3`: clear use for a concept, premise, objection, case, or debate narrative.
+- `4`: direct and substantial use in a live argument, chapter, or literature review.
+- `5`: central source that materially shapes the thesis, a core premise, or a major objection and reply.
+
+The score measures project usefulness, not philosophical quality. Do not inflate it because a paper shares keywords with the project. A rating above 2.5 requires a specific prospective role.
+
+If no project context exists, omit numerical relevance scoring unless the user requests it and proceed at the depth appropriate to the request.
+
+### Pass 2A: Thorough Analysis Above 2.5
+
+For project-relevance ratings above 2.5, read the full paper closely and produce a full analysis. Identify:
+
+- every central concept and distinction, including definitions and argumentative functions;
+- the central question, thesis, and dialectical target;
+- positions, arguments, assumptions, or interpretations the author opposes;
+- each major argument the author supports;
+- the premises, intermediate conclusions, and route to the final conclusion;
+- the evidence or argument supporting each major premise;
+- the historical narrative used to frame the problem and what it presupposes or omits;
+- the strongest objection considered and the author's reply;
+- inferential gaps, ambiguous concepts, unsupported premises, evidential weaknesses, and relevant counterevidence;
+- relations to earlier positions, allies, targets, competitors, and unresolved questions.
+
+Use premise-conclusion reconstruction when it clarifies the argument. Do not force formalization on interpretive, historical, empirical, or methodological papers whose real structure is better represented another way.
+
+### Pass 2B: Concise Report at 2.5 or Below
+
+For ratings of 2.5 or below, avoid unnecessary line-by-line reconstruction. Produce a concise report containing:
+
+- available metadata and selectable-text reliability;
+- rating and rationale;
+- reading status as coarse reading and relevance triage;
+- central question, thesis, dialectical target, and main argumentative route;
+- principal kind of evidence;
+- limited possible relevance and recommended disposition;
+- only the strongest references worth following;
+- one or two open questions when useful.
+
+If source corruption, missing pages, or ambiguity prevents responsible triage, resolve that problem before rating.
+
+## Analyze Concepts and Arguments
+
+For each central concept or distinction, explain:
+
+- what it means in the paper;
+- why the author introduces it;
+- what argumentative work it performs;
+- whether it is exhaustive, exclusive, stable, or contested;
+- what nearby concept it should not be confused with;
+- whether the author's use differs from standard or neighboring uses.
+
+For each major argument, distinguish:
+
+- **Reconstruction:** State the premises and conclusion charitably.
+- **Premise support:** Identify what supports each premise.
+- **Logical check:** Assess validity, inferential gaps, equivocation, suppressed premises, and scope shifts.
+- **Content check:** Assess the clarity, plausibility, and independent support of the premises.
+- **Evidence check:** Assess whether the evidence supports the premise and whether checked empirical, textual, or argumentative counterevidence exists.
+
+Identify the kinds of support used: thought experiments, cases, conceptual distinctions, textual interpretation, formal models, empirical data, intuitions, linguistic evidence, explanatory virtues, theoretical costs, or burden-shifting.
+
+## Place the Paper Relationally
 
 Identify:
 
-- The central question or problem.
-- The paper's thesis in one or two precise sentences.
-- The dialectical target: view, argument, distinction, assumption, method, case, or literature gap.
-- The main premises or supporting claims.
-- Intermediate conclusions.
-- The route from premises to the final conclusion.
-- The strongest objection considered by the author.
-- The author's reply.
-- Any premise, inference, case, or interpretation left unsupported.
+- the earlier position or problem to which the paper responds;
+- its allies, targets, and competitors;
+- what intervention it makes;
+- what changes after that intervention;
+- what remains unresolved;
+- which broader literature-review or historical narrative it belongs to.
 
-When useful, provide a numbered premise-conclusion reconstruction. Do not force a formal reconstruction when the paper is primarily interpretive, historical, empirical, or methodological; explain its actual structure instead.
+Do not replace relational placement with an author list. Separate the paper's historical narrative from independently verified history. Cite the paper for its own narrative; mark second-hand claims until original sources are checked.
 
-### 3. Assess the Support
+## Assess Project Relevance
 
-Explain what the author relies on:
+When project context exists, state:
 
-- Thought experiments or cases.
-- Conceptual distinctions.
-- Textual interpretation.
-- Formal models or proofs.
-- Empirical studies or datasets.
-- Explanatory virtues, theoretical costs, or burden-shifting.
-- Intuitions, common judgments, linguistic data, or practice-based evidence.
+- whether the paper is an ally, target, complication, precursor, source of machinery, objection source, background source, or methodological model;
+- where it converges with or pressures the project;
+- which concept, premise, objection, chapter, or literature-review problem it bears on;
+- what the user should incorporate, answer, revise, or set aside;
+- its best placement: main text, argument section, objection section, literature review, concept file, footnote, bibliography, or future-reading list;
+- key passages with page numbers only when exact wording matters.
 
-For each major piece of support, state what claim it supports and whether the support is sufficient. Mark whether weaknesses concern a false premise, missing evidence, invalid inference, ambiguous concept, unrepresentative case, or unsupported methodological assumption.
+Recommend citing the paper only when it does at least one of the following:
 
-### 4. Extract Key Distinctions
+1. explicates a concept;
+2. supports a premise;
+3. exhibits an implication of the project;
+4. supplies a vivid case for or against a premise;
+5. gives an independent argument for or against a project claim;
+6. contributes materially to the background or development of a relevant debate.
 
-Define the paper's central distinctions in plain language. Explain:
+Do not recommend citation for mere topical similarity, prestige, name-checking, or bibliography padding. Do not treat project memory or management files as academic evidence.
 
-- Why the distinction is introduced.
-- What argumentative work it performs.
-- Whether it is exhaustive, exclusive, stable, or contested.
-- What nearby distinction it should not be confused with.
-- How the paper's terminology differs from standard or neighboring uses.
+## Screen the Bibliography
 
-Use examples when an abstract distinction could otherwise look merely verbal.
+Prioritize references that defend, attack, or clarify the main thesis; supply recurring distinctions or cases; represent major positions; provide foundational sources; or constitute important recent interventions.
 
-### 5. Place the Paper in the Debate
+For each selected reference, state why it is worth following and what it may contribute. Separate:
 
-Identify:
+- verified sources already read or analyzed;
+- follow-up leads identified only through the paper.
 
-- The earlier position or problem to which the paper responds.
-- Its main allies, targets, and competitors.
-- What it changes in the debate.
-- What remains unresolved after its intervention.
-- Which broader literature-review problem narrative it belongs in.
+Never use an unread bibliography item as independent support. Do not promote its claims into argument maps, historical narratives, or literature reviews until the relevant content is checked.
 
-Do not turn debate placement into an author list. Explain relations among claims, problems, methods, or distinctions.
+## Write the Report
 
-### 6. Assess Project Relevance
-
-When the user has a research project, thesis, chapter, literature review, or argument map, state explicitly:
-
-- Whether the paper is an ally, target, complication, source of machinery, background source, objection source, or methodological model.
-- Where it converges with the user's project.
-- Where it diverges or creates pressure.
-- What the user should answer, revise, incorporate, or set aside.
-- The best placement: main text, objection section, literature review, footnote, background section, bibliography, or future-reading list.
-- A small set of key passages with page numbers, only when exact wording matters.
-
-Do not treat project memory as evidence. Verify claims against the paper and current project documents.
-
-### 7. Screen the Bibliography
-
-Extract references worth following. Prioritize sources that:
-
-- Defend, attack, or clarify the main thesis.
-- Supply recurring distinctions or cases.
-- Represent major positions in the debate.
-- Are repeatedly cited as foundational or recent interventions.
-- Would help the user understand the paper's assumptions or reception.
-
-Exclude purely tangential references unless the user asks for comprehensive bibliography extraction.
-
-### 8. Write the Analysis
-
-Use this default structure unless the user requests another format:
+Use this full structure for a thorough analysis unless the user's project supplies a more specific template:
 
 ```markdown
 # Author (Year): Short Title
 
-## Bibliographic Information
-
-## Central Question
-
-## Thesis
-
-## Argument Structure
-
-## Supporting Evidence
-
-## Key Distinctions
-
-## Objections and Replies
-
-## Position in the Debate
-
-## Relevance to the User's Project
-
-## Key Passages
-
-## References Worth Following
-
-## Open Questions
+## 1. Metadata
+## 2. Project Relevance Rating
+## 3. Relations to the Project and Previous Literature
+## 4. Concepts, Question, Thesis, and Dialectical Target
+## 5. Arguments and Checks
+## 6. Evidence and Evidence Check
+## 7. Strongest Objection and Reply
+## 8. Contribution and Historical Placement
+## 9. Bibliography Screening
+### Verified Sources Worth Using
+### Follow-Up Leads Requiring Verification
+## 10. Problems and Open Questions
+## References
 ```
 
-Adapt headings when the paper's genre requires it, but retain the substantive coverage.
+Use this structure for a concise triage report:
 
-If saving a file, use a descriptive ASCII filename such as `<author-year-keywords>.md`, unless the user's project has an existing naming convention.
+```markdown
+# Author (Year): Short Title
 
-## Optional Project File Updates
+## Metadata
+## Relevance Rating
+## Gist
+## Limited Project Relevance
+## References Worth Following
+## Open Questions
+## References
+```
 
-Update argument maps, literature-review files, bibliographies, reading lists, or historical lineage files only when the user asks or provides the relevant paths.
+Adapt headings to the paper's genre without omitting the required substance. If saving a file, use a descriptive ASCII filename such as `<author-year-keywords>.md` unless the project has an established convention.
+
+## Update Project Files Carefully
+
+Update argument maps, literature-review files, bibliographies, reading lists, historical lineages, or project memory only when the user requests it or supplies a project workflow that calls for it.
 
 Before changing shared research files:
 
-1. Inspect existing organization and naming conventions.
-2. Preserve the file's structure and citation style.
-3. Add only claims supported by the paper analysis.
-4. Avoid mechanically changing counts or summaries without verifying them.
+1. Inspect their organization, naming, and citation conventions.
+2. Add only claims supported by the analyzed paper or separately verified sources.
+3. Preserve distinctions between verified sources, second-hand reports, and follow-up leads.
+4. Avoid mechanically changing counts, summaries, or every possible target.
 5. Keep speculative relevance separate from confirmed project use.
+6. Update stable project memory only when the user accepts a commitment or authoritative project files already entail it.
 
-If the user has no established project files, offer a concise standalone analysis instead of creating a pipeline.
+If no project pipeline exists, produce a standalone analysis instead of creating one without permission.
 
 ## Quality Check
 
 Before finishing, verify that:
 
-- The analysis says whether the full paper was read.
-- The thesis is precise and charitable.
-- The argument is reconstructed rather than merely summarized.
-- Major support is tied to specific claims.
-- Page citations are accurate where available.
-- The author's view and the user's assessment are clearly separated.
-- Debate placement is relational, not just bibliographic.
-- Project relevance is concrete when project context exists.
-- Bibliography recommendations are screened, not dumped.
-- Any saved files follow the user's naming and folder conventions.
+- the report accurately states coarse or thorough reading status;
+- the relevance rating has a concrete project-based rationale;
+- the thesis and dialectical target are precise and charitable;
+- major arguments are reconstructed rather than merely summarized;
+- every major premise is connected to its support;
+- logical, content, and evidence checks remain distinct;
+- page citations and metadata are accurate where available;
+- the author's claims, other sources' claims, and the analyst's assessment remain separate;
+- debate placement is relational, not merely bibliographic;
+- bibliography recommendations are screened and unread leads are labeled;
+- saved files follow the user's naming and folder conventions.
