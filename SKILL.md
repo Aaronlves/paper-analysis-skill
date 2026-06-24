@@ -31,10 +31,13 @@ If the user provides only an abstract or excerpt, state that the analysis is pro
 
 Record, when available:
 
-- record title, author, year, venue, DOI or stable identifier, and page range;
-- paper type: article, chapter, conference paper, preprint, review essay, reply, commentary, or dissertation chapter;
+- one complete citation in the user's requested style, or APA 7 by default;
 - version status: published, accepted manuscript, preprint, draft, or unknown;
-- whether the file has reliable selectable text, pagination, notes, bibliography, figures, or appendices.
+- source file or supplied source location;
+- whether the file has reliable selectable text, pagination, notes, bibliography, figures, or appendices;
+- reading status: coarse survey, thorough reading, or analysis limited to supplied material.
+
+Put the complete citation under the report's Metadata section as `Reference`. Do not repeat bibliographic information already contained in that citation, including record title, authors, year, venue, DOI or stable identifier, page range, or paper type. Record only nonduplicative source and reading information as separate metadata fields.
 
 If extraction is unreliable, use OCR or page rendering and visually verify crucial passages.
 
@@ -80,7 +83,7 @@ Use premise-conclusion reconstruction when it clarifies the argument. Do not for
 
 For ratings of 2.5 or below, avoid unnecessary line-by-line reconstruction. Produce a concise report containing:
 
-- available metadata and selectable-text reliability;
+- a complete citation plus nonduplicative source, version, reading-status, and selectable-text information under Metadata;
 - rating and rationale;
 - reading status as coarse reading and relevance triage;
 - central question, thesis, dialectical target, and main argumentative route;
@@ -166,6 +169,11 @@ Use this full structure for a thorough analysis unless the user's project suppli
 # Author (Year): Short Title
 
 ## 1. Metadata
+**Reference:** [Complete citation]
+**Version status:**
+**Source file:**
+**Selectable-text reliability:**
+**Reading status:** Thorough reading
 ## 2. Project Relevance Rating
 ## 3. Relations to the Project and Previous Literature
 ## 4. Concepts, Question, Thesis, and Dialectical Target
@@ -185,6 +193,11 @@ Use this structure for a concise triage report:
 # Author (Year): Short Title
 
 ## Metadata
+**Reference:** [Complete citation]
+**Version status:**
+**Source file:**
+**Selectable-text reliability:**
+**Reading status:** Coarse survey and relevance triage
 ## Relevance Rating
 ## Gist
 ## Limited Project Relevance
@@ -192,7 +205,7 @@ Use this structure for a concise triage report:
 ## Open Questions
 ```
 
-Adapt headings to the paper's genre without omitting the required substance. If saving a file, use a descriptive ASCII filename such as `<author-year-keywords>.md` unless the project has an established convention.
+Adapt headings to the paper's genre without omitting the required substance. Put any additional works actually cited in the report under an `Additional References Used` subsection within Metadata. Do not add a separate References section at the end of the report. Bibliography Screening remains a distinct analytical section for follow-up sources and must not duplicate the analyzed paper's citation. If saving a file, use a descriptive ASCII filename such as `<author-year-keywords>.md` unless the project has an established convention.
 
 ## Update Project Files Carefully
 
@@ -220,6 +233,8 @@ Before finishing, verify that:
 - every major premise is connected to its support;
 - logical, content, and evidence checks remain distinct;
 - page citations and metadata are accurate where available;
+- bibliographic information appears once in the Metadata citation rather than in duplicate fields;
+- no separate References section appears at the end of the report;
 - the author's claims, other sources' claims, and the analyst's assessment remain separate;
 - debate placement is relational, not merely bibliographic;
 - bibliography recommendations are screened and unread leads are labeled;
