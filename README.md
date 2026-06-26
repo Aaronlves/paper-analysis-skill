@@ -1,20 +1,30 @@
 # Paper Analysis Skill
 
-A general Codex skill for triaging and analyzing academic papers, especially philosophy papers, as arguments rather than neutral summaries.
+`paper-analysis` is a general Codex skill for reading academic papers as arguments. It helps Codex move beyond summary: identify the paper's question and thesis, reconstruct the argument, assess evidence, map objections and replies, place the paper in a debate, and screen the bibliography for follow-up reading.
 
-The skill guides Codex to rate prospective relevance, choose an appropriate depth of reading, reconstruct argument structure, assess support, map objections and replies, extract key distinctions, screen bibliographies, and explain relevance to a research project when project context is provided.
+The skill is project-neutral. It does not contain private research context, personal project files, or project-specific structure.
 
-## What It Helps With
+## What It Does
 
-- Reading and analyzing academic papers or PDFs
-- Triaging papers with a project-relevance score
-- Extracting a paper's central question and thesis
-- Reconstructing arguments in premise-conclusion form
-- Identifying objections, replies, unsupported premises, and weak inferences
-- Assessing evidence, cases, conceptual distinctions, and methodology
-- Placing a paper within a debate or literature-review narrative
-- Screening references worth following
-- Explaining how a paper supports, challenges, or complicates a project
+- Identifies the source, reading status, citation, and text reliability.
+- Separates full-paper analysis from provisional analysis based on abstracts, excerpts, notes, or metadata.
+- Rates project relevance when the user supplies project context.
+- Reconstructs central arguments, premises, objections, replies, and evidence.
+- Distinguishes the author's claims from the analyst's assessment.
+- Places the paper relationally within a literature or debate.
+- Screens bibliography items without treating unread sources as independent support.
+- Produces concise triage reports or fuller paper-analysis reports.
+- Proposes handoff candidates without editing project files unless the user authorizes it.
+
+## Companion Skills
+
+This public skill mentions only these companion skills:
+
+- `pdf` for PDF extraction, OCR, rendering, pagination checks, figures, tables, and appendices.
+- `zotero` for citation records, library metadata, bibliography export, and library lookup.
+- `philosophy-writing` when analysis turns into drafting or revising philosophical prose.
+
+Any project-specific workflow should live in a private extension, not in this repository.
 
 ## Install
 
@@ -31,142 +41,97 @@ cd ~/.codex/skills/paper-analysis
 git pull
 ```
 
-## Usage
-
-Ask Codex to analyze a paper, PDF, abstract, excerpt, or citation. For example:
+## Usage Examples
 
 ```text
-Read this paper in full, reconstruct its argument, and assess whether the support is sufficient.
+Use paper-analysis to read this paper, reconstruct its argument, and assess the evidence.
 ```
 
 ```text
-Analyze this philosophy paper and identify its central thesis, main premises, objections, and replies.
+Use paper-analysis to triage this article for my project. I only need a relevance score and the main reason.
 ```
 
 ```text
-Place this article in the debate and explain whether it is an ally, target, complication, or background source for my project.
+Use paper-analysis on this abstract only. Be explicit about what cannot yet be claimed without the full paper.
 ```
 
 ```text
-Extract the references worth following from this paper and explain why each one matters.
+Use paper-analysis to screen this paper's bibliography and identify the strongest sources to follow up.
 ```
 
-## Skill Contents
+## Output Pattern
 
-```text
-SKILL.md              Core skill instructions
-agents/openai.yaml    Codex UI metadata
-```
+The skill normally produces one of three outputs:
 
-## Add a Private Project Extension
+1. a thorough analysis report;
+2. a concise triage report;
+3. a provisional report when only limited material is available.
 
-This repository is intentionally project-neutral. For a full research workflow, keep this general skill unchanged and create a separate private skill that supplies your dissertation or project context. This prevents personal research information from entering a public fork and makes updates to the base skill easier to adopt.
+Reports keep bibliographic information in one `Metadata` citation field, avoid a duplicate final `References` section, and separate verified sources from follow-up leads.
 
-### Recommended Private Project Architecture
+## Private Extensions
 
-The public skill supplies the reusable method. The private extension connects that method to a private research workspace without copying project information into the public repository.
+If you want Codex to assess papers for a specific research project, create a separate private extension. The extension should supply project context, relevance criteria, file paths, templates, and write permissions. The general method should remain here.
+
+Recommended pattern:
 
 ```mermaid
 flowchart LR
-    subgraph Public["Public and reusable"]
-        Base["paper-analysis<br/>general reading and analysis method"]
-    end
-
-    subgraph Private["Private research workspace"]
-        Extension["project-paper-analysis<br/>private extension"]
-        Context["Project context<br/>thesis, concepts, open questions"]
-        Policy["Workspace policy<br/>paths, naming, write permissions"]
-        Sources["Research materials<br/>papers, notes, verified sources"]
-        Reports["Paper analyses<br/>triage and full reports"]
-        Knowledge["Project knowledge base<br/>arguments, objections, chapters"]
-    end
-
-    Base --> Extension
-    Context --> Extension
-    Policy --> Extension
-    Sources --> Extension
-    Extension --> Reports
-    Extension --> Knowledge
+    Base["paper-analysis<br/>general method"] --> Extension["private project extension<br/>local context and rules"]
+    Project["private project files<br/>notes, drafts, bibliography"] --> Extension
+    Extension --> Reports["paper reports<br/>triage or full analysis"]
 ```
 
-A practical folder layout can look like this:
+A minimal private extension can use this structure:
 
 ```text
-private-research-project/
-├── AGENTS.md                         # Tells Codex to use both skills
-├── project-control/
-│   ├── project-memory.md             # Stable commitments only
-│   ├── project-status.md             # Current phase and priorities
-│   └── workflow.md                   # Research and writing procedure
-├── concepts/                         # Definitions and distinctions
-├── arguments/                        # Premises and supporting arguments
-├── objections-and-replies/           # Live objections and responses
-├── chapters-or-sections/             # Draft prose
-├── paper-analyses/                   # Saved triage and full reports
-├── literature-map/                   # Debate and historical placement
-├── bibliography/                     # Verified project references
-└── .private-skills/
-    └── project-paper-analysis/
-        ├── SKILL.md                  # Concise controller
-        ├── agents/
-        │   └── openai.yaml           # Codex UI metadata
-        └── references/
-            ├── project-context.md    # Stable vs. tentative project claims
-            ├── report-templates.md   # Project-specific output formats
-            └── workspace-policy.md   # Paths, writes, and privacy rules
+project-paper-analysis/
+├── SKILL.md
+├── agents/
+│   └── openai.yaml
+└── references/
+    ├── project-context.md
+    ├── report-templates.md
+    └── workspace-policy.md
 ```
 
-The names are illustrative. Use paths appropriate to your system, make the extension folder match the skill's `name`, and ensure `AGENTS.md` or your Codex configuration points to the private extension. Keep the whole project outside public repositories unless you have deliberately removed sensitive material.
-
-Copy the prompt below into Codex. Replace the bracketed fields with your own information, and provide the relevant project files when asked. If the material is sensitive, keep the resulting extension outside any public repository.
+Use this prompt to create one:
 
 ```text
-Use the skill-creator skill to build a private, project-specific extension for the
-installed `paper-analysis` skill. Do not copy, rewrite, or weaken the general
-paper-analysis workflow. The extension must invoke or defer to `paper-analysis`
-for paper triage and analysis, then add only the local research context and
-workflow rules needed for my project.
+Build a private project-specific extension for the installed `paper-analysis`
+skill. Do not copy or rewrite the general paper analysis method. The extension
+must use `paper-analysis` for general reading, argument reconstruction,
+evidence checking, relevance triage, and bibliography screening, then add only
+my local project context and workflow rules.
 
 Create the extension as a separate skill named `[project-name]-paper-analysis`
-in `[private skill directory]`. Before writing it, inspect the project materials
-I provide and ask only for information that cannot be established from those
-files. Do not place the extension inside the public paper-analysis repository.
+in `[private skill directory]`. Keep it outside any public repository.
 
-Encode the following project-specific information:
+Include:
 
-- Project title and type: [title; dissertation, article, book, etc.]
-- Central question: [question]
-- Working thesis and major commitments: [claims]
-- Chapter or section map: [structure]
-- Key concepts and preferred definitions: [concepts]
-- Live arguments, objections, and unresolved problems: [argument map]
-- Relevant debates, authors, and historical scope: [literature]
-- Project-specific relevance criteria: [what makes a paper score 0–5]
-- Required analysis headings or templates: [output format]
-- Citation style and evidence rules: [style]
-- Paths and naming conventions for notes, analyses, bibliographies, argument
-  maps, and reading queues: [paths and conventions]
-- Rules for updating project files, including which changes require my explicit
-  approval: [write policy]
-- Privacy constraints and material that must never be quoted or exported:
-  [privacy rules]
+- the project question, thesis, and stable commitments;
+- tentative hypotheses and open questions, clearly separated from stable claims;
+- project-specific relevance criteria;
+- preferred report templates;
+- citation style and evidence rules;
+- paths and naming conventions for private files;
+- rules for when Codex may read, create, or update project files;
+- privacy boundaries and material that must not be exported, searched, or published.
 
 Design requirements:
 
 1. Keep general paper-reading, argument-reconstruction, evidence-checking, and
    bibliography-screening rules in `paper-analysis`; do not duplicate them.
-2. Make the extension's description trigger only when a paper is being assessed
-   for this specific project.
-3. Tell the agent to use both skills together, with the extension supplying
-   project context and `paper-analysis` supplying the general method.
-4. Separate stable project commitments from tentative hypotheses and open
-   questions.
-5. Treat project notes as context, not as independent scholarly evidence.
-6. Require verification before promoting claims from unread or second-hand
-   sources into the dissertation's argument or literature review.
-7. Preserve existing project files and conventions; do not create or update
-   shared files without authorization defined by the write policy.
-8. Put long project context in clearly named reference files and keep SKILL.md
+2. Make the extension trigger only when a paper is being assessed for this
+   specific project.
+3. Tell the agent to use both skills together: the extension supplies local
+   project context, and `paper-analysis` supplies the general method.
+4. Treat project notes as context, not as independent scholarly evidence.
+5. Require verification before promoting claims from unread or second-hand
+   sources into the project argument or literature review.
+6. Preserve existing project files and conventions.
+7. Do not create or update shared files unless the write policy authorizes it.
+8. Put long project context in clearly named reference files and keep `SKILL.md`
    concise, with explicit instructions about when each reference must be read.
 9. Include `agents/openai.yaml`, validate the finished skill, and report its
    private installation path and file structure.
@@ -174,22 +139,17 @@ Design requirements:
     any publication. Default to keeping the entire extension private.
 
 After creating it, show me a brief boundary audit: what remains in the general
-skill, what lives in the private extension, and whether any project-specific or
+skill, what lives in the private extension, and whether project-specific or
 personal information appears outside the private directory.
 ```
 
-## Core Principles
+## Repository Contents
 
-The skill guides Codex to:
-
-- Read the full paper when available
-- Survey before rating and reserve full analysis for papers that warrant it
-- Distinguish the author's claims from the user's assessment
-- Reconstruct the strongest plausible version of the argument before criticizing it
-- Use page citations when pagination is available
-- Avoid inventing quotations, page numbers, citations, or argumentative steps
-- Treat debate placement as relations among claims, not just a list of authors
-- Update project files only when the user asks or provides paths
+```text
+SKILL.md
+agents/openai.yaml
+README.md
+```
 
 ## Repository
 

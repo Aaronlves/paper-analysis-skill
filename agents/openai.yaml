@@ -1,4 +1,4 @@
 interface:
   display_name: "Paper Analysis"
-  short_description: "Triage and analyze academic papers rigorously"
-  default_prompt: "Use $paper-analysis to rate this paper's relevance, choose concise or thorough analysis, reconstruct its arguments, assess its evidence, and screen its bibliography."
+  short_description: "Analyze papers with safe handoffs"
+  default_prompt: "Use $paper-analysis to analyze this paper, state source access, choose the right depth, reconstruct its arguments, assess evidence, screen its bibliography, and propose handoff candidates without updating files unless authorized."
