@@ -5,15 +5,16 @@ description: Systematically triage, read, and analyze academic papers, especiall
 
 # Paper Analysis
 
-Analyze papers as arguments and contributions to a knowledge base, not as neutral summaries.
+Analyze academic papers as argumentative contributions, not as neutral summaries.
 
 Preserve the differences among:
 
 - what the author argues;
+- what the author assumes;
 - what the evidence supports;
 - what other sources report;
 - what the analyst assesses;
-- what the user or project should take from the paper.
+- what a user or project may responsibly use the paper for.
 
 This skill analyzes the paper itself. It may propose downstream project updates, but it must not silently perform them.
 
@@ -25,13 +26,13 @@ Use related skills when available:
 - use `zotero` for citation records, library metadata, bibliography export, and library lookup;
 - use `philosophy-writing` when the task turns from paper analysis into drafting, revising, or evaluating philosophical prose.
 
-Do not assume that any other project-specific skill exists. If the user supplies local project instructions, follow them without copying private project content into this general skill.
+Do not assume that any private project extension exists. If the user supplies local project instructions, follow them without copying private project content into this general skill.
 
 ## Core Commitments
 
 - Survey the whole paper before rating or reporting on it. Do not infer the argument from the abstract or introduction alone.
 - Read closely before giving a full analysis when the full text is available.
-- Distinguish the author's claims from the analyst's assessment and the user's project commitments.
+- Distinguish the author's claims, other sources' claims, the analyst's assessment, and the user's project commitments.
 - Reconstruct the strongest plausible version of an argument before criticizing it.
 - Tie major premises to the evidence or argument offered for them.
 - Support paper-specific and contested claims with page citations whenever pagination is available.
@@ -63,13 +64,15 @@ If the user provides only an abstract, citation, note, or excerpt, state that th
 
 If source corruption, missing pages, or ambiguity prevents responsible triage, resolve or report that problem before rating.
 
-## Figures, Tables, Notes, and Appendices
+## Reading Modes
 
-If the paper's argument depends on a table, figure, diagram, appendix, footnote, endnote, formal notation, textual apparatus, or non-body material, inspect that material directly.
+Before acting, choose the narrowest mode that fits the request:
 
-Do not rely only on extracted body text when the relevant support is visual, tabular, formal, mathematical, or note-based.
+- `analysis-only`: analyze and report without file updates.
+- `analysis-plus-handoff-candidates`: analyze and propose later project uses; do not update files.
+- `analysis-plus-authorized-updates`: update only the exact files or file classes explicitly authorized by the user.
 
-If relevant non-body material cannot be inspected, mark the analysis as incomplete and identify what remains unchecked.
+If the user does not specify a mode, use `analysis-plus-handoff-candidates`.
 
 ## Use Two Reading Passes
 
@@ -174,6 +177,14 @@ For each major argument, distinguish:
 - **Project pressure:** If project context exists, state whether this argument supports, pressures, complicates, or merely contextualizes the project.
 
 Identify the kinds of support used: thought experiments, cases, conceptual distinctions, textual interpretation, formal models, empirical data, intuitions, linguistic evidence, explanatory virtues, theoretical costs, or burden-shifting.
+
+## Figures, Tables, Notes, and Appendices
+
+If the paper's argument depends on a table, figure, diagram, appendix, footnote, endnote, formal notation, textual apparatus, or non-body material, inspect that material directly.
+
+Do not rely only on extracted body text when the relevant support is visual, tabular, formal, mathematical, or note-based.
+
+If relevant non-body material cannot be inspected, mark the analysis as incomplete and identify what remains unchecked.
 
 ## Place the Paper Relationally
 

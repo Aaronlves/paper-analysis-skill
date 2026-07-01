@@ -1,34 +1,39 @@
 # Paper Analysis Skill
 
-`paper-analysis` is a general Codex skill for reading academic papers as arguments. It helps Codex move beyond summary: identify the paper's question and thesis, reconstruct the argument, assess evidence, map objections and replies, place the paper in a debate, and screen the bibliography for follow-up reading.
+`paper-analysis` is a general Codex skill for reading academic papers as arguments. It helps Codex identify a paper's question, thesis, dialectical target, argument structure, evidence, objections, replies, contribution, and bibliography leads.
 
-The skill is project-neutral. It does not contain private research context, personal project files, or project-specific structure.
+The repository is intentionally project-neutral. It does not contain private research context, personal file paths, project structure, or project-specific claims.
 
-## What It Does
+## What This Skill Is For
 
-- Identifies the source, reading status, citation, and text reliability.
-- Separates full-paper analysis from provisional analysis based on abstracts, excerpts, notes, or metadata.
-- Rates project relevance when the user supplies project context.
-- Reconstructs central arguments, premises, objections, replies, and evidence.
-- Distinguishes the author's claims from the analyst's assessment.
-- Places the paper relationally within a literature or debate.
-- Screens bibliography items without treating unread sources as independent support.
-- Produces concise triage reports or fuller paper-analysis reports.
-- Proposes handoff candidates without editing project files unless the user authorizes it.
+Use `paper-analysis` when you want Codex to do one or more of the following:
+
+- triage a paper's relevance to a research question;
+- distinguish full-paper analysis from abstract-only or excerpt-only analysis;
+- identify the central question, thesis, and dialectical target;
+- reconstruct arguments in premise-conclusion form when helpful;
+- assess logical, conceptual, and evidential support;
+- map objections and replies;
+- place a paper in a debate or literature review;
+- screen the bibliography for follow-up reading;
+- explain how a source might support, complicate, or pressure a project;
+- produce a concise triage report, thorough analysis report, or provisional limited-access report.
+
+The skill is especially useful for philosophy papers, but its workflow also applies to other argumentative academic writing.
 
 ## Companion Skills
 
-This public skill mentions only these companion skills:
+This public skill only names three optional companion skills:
 
-- `pdf` for PDF extraction, OCR, rendering, pagination checks, figures, tables, and appendices.
+- `pdf` for PDF extraction, OCR, page rendering, pagination checks, figures, tables, appendices, and visual verification.
 - `zotero` for citation records, library metadata, bibliography export, and library lookup.
-- `philosophy-writing` when analysis turns into drafting or revising philosophical prose.
+- `philosophy-writing` when analysis turns into drafting, revising, or evaluating philosophical prose.
 
-Any project-specific workflow should live in a private extension, not in this repository.
+Project-specific extensions, local file policies, and private research memory should live outside this repository.
 
-## Install
+## Installation
 
-Clone this repository into your Codex skills folder:
+Clone the repository into your Codex skills folder:
 
 ```bash
 git clone https://github.com/Aaronlves/paper-analysis-skill.git ~/.codex/skills/paper-analysis
@@ -41,48 +46,333 @@ cd ~/.codex/skills/paper-analysis
 git pull
 ```
 
-## Usage Examples
+The skill folder should contain:
+
+```text
+paper-analysis/
+├── SKILL.md
+├── README.md
+└── agents/
+    └── openai.yaml
+```
+
+## Basic Usage
+
+Ask Codex to use `paper-analysis` and provide a PDF, citation, abstract, excerpt, note, or pasted text.
+
+Examples:
 
 ```text
 Use paper-analysis to read this paper, reconstruct its argument, and assess the evidence.
 ```
 
 ```text
-Use paper-analysis to triage this article for my project. I only need a relevance score and the main reason.
+Use paper-analysis to triage this article for my project. I only need the relevance score, central thesis, and whether it is worth a full read.
 ```
 
 ```text
-Use paper-analysis on this abstract only. Be explicit about what cannot yet be claimed without the full paper.
+Use paper-analysis on this abstract only. Be explicit about what cannot yet be claimed without the full text.
 ```
 
 ```text
 Use paper-analysis to screen this paper's bibliography and identify the strongest sources to follow up.
 ```
 
-## Output Pattern
+## Workflow Overview
 
-The skill normally produces one of three outputs:
-
-1. a thorough analysis report;
-2. a concise triage report;
-3. a provisional report when only limited material is available.
-
-Reports keep bibliographic information in one `Metadata` citation field, avoid a duplicate final `References` section, and separate verified sources from follow-up leads.
-
-## Private Extensions
-
-If you want Codex to assess papers for a specific research project, create a separate private extension. The extension should supply project context, relevance criteria, file paths, templates, and write permissions. The general method should remain here.
-
-Recommended pattern:
+The skill follows a staged workflow:
 
 ```mermaid
-flowchart LR
-    Base["paper-analysis<br/>general method"] --> Extension["private project extension<br/>local context and rules"]
-    Project["private project files<br/>notes, drafts, bibliography"] --> Extension
-    Extension --> Reports["paper reports<br/>triage or full analysis"]
+flowchart TD
+    A["Input<br/>PDF, citation, abstract, excerpt, notes, or text"] --> B["Source access check"]
+    B --> C["Coarse survey"]
+    C --> D["Relevance rating<br/>0 to 5 when project context exists"]
+    D --> E{"Depth decision"}
+    E -->|"high relevance or user requests full read"| F["Thorough analysis"]
+    E -->|"low relevance or quick triage"| G["Concise triage"]
+    E -->|"limited source access"| H["Provisional analysis"]
+    F --> I["Bibliography screening"]
+    G --> I
+    H --> I
+    I --> J["Project handoff candidates<br/>no file updates unless authorized"]
 ```
 
-A minimal private extension can use this structure:
+## Step 1: Establish Source Access
+
+Before analyzing, Codex should state what it can actually inspect:
+
+- full text available and readable;
+- full text available but extraction unreliable;
+- full text available but pagination unreliable;
+- abstract or excerpt only;
+- citation or metadata only;
+- user notes only;
+- unavailable, incomplete, or corrupted source.
+
+This matters because the report should not claim full-paper analysis when only partial material was available. Page-specific claims require verified pagination. Quotations require checking against the source text.
+
+## Step 2: Identify the Paper
+
+When available, the report should record:
+
+- one complete citation in the requested style, or APA 7 by default;
+- version status: published, accepted manuscript, preprint, draft, or unknown;
+- source file or supplied source location;
+- source access status;
+- selectable-text reliability;
+- pagination reliability;
+- relevant non-body materials, such as notes, tables, figures, appendices, or bibliography;
+- reading status: coarse survey, thorough reading, or limited-access analysis.
+
+The analyzed paper's bibliographic record belongs in one `Reference` field under `Metadata`. The report should not repeat the same bibliographic details in several fields or add a duplicate final `References` section.
+
+## Step 3: Survey Before Rating
+
+The first pass should survey the whole paper:
+
+1. read the abstract, introduction, conclusion, headings, and explicit thesis statements;
+2. skim every section;
+3. inspect passages containing principal arguments, objections, evidence, conceptual machinery, and historical framing;
+4. inspect relevant notes, figures, tables, appendices, or formal apparatus;
+5. record the central question, thesis, dialectical target, argument route, and likely project use.
+
+This prevents Codex from overrating a paper because of keywords in the title or abstract.
+
+## Step 4: Rate Project Relevance
+
+When the user supplies project context, the skill uses a 0-5 relevance scale:
+
+| Score | Meaning |
+| --- | --- |
+| 0 | No identifiable use. |
+| 1 | Remote topical overlap. |
+| 2 | Limited background or bibliographic use. |
+| 2.5 | Borderline; no clear argumentative role yet. |
+| 3 | Clear use for a concept, premise, objection, case, or debate narrative. |
+| 4 | Direct and substantial use in a live argument, section, or literature review. |
+| 5 | Central source that materially shapes a thesis, core premise, or major objection and reply. |
+
+The score measures usefulness for the user's project, not the paper's philosophical quality. A rating above 2.5 requires a specific prospective role.
+
+If no project context exists, Codex should omit numerical relevance scoring unless the user asks for it.
+
+## Step 5: Choose the Report Type
+
+The skill normally produces one of three reports.
+
+### Thorough analysis
+
+Use this when the full text is available and the paper is substantially relevant or the user requests a full reading.
+
+It should include:
+
+- central concepts and distinctions;
+- question, thesis, and dialectical target;
+- argument reconstruction;
+- premise support;
+- logical, content, and evidence checks;
+- strongest objection and reply;
+- historical or literature placement;
+- bibliography screening;
+- project handoff candidates.
+
+### Concise triage
+
+Use this when relevance is low, the user asks for quick triage, or the paper does not yet warrant close reading.
+
+It should include:
+
+- Metadata;
+- relevance rating and rationale;
+- central question and thesis;
+- main argumentative route;
+- limited possible relevance;
+- strongest references worth following;
+- open questions.
+
+### Provisional analysis
+
+Use this when only an abstract, excerpt, citation, notes, or incomplete text is available.
+
+It should clearly separate:
+
+- what can responsibly be said;
+- what cannot yet be claimed;
+- likely question, thesis, or topic;
+- possible project relevance;
+- verification needed before stronger claims.
+
+## Step 6: Reconstruct Arguments
+
+The analysis should distinguish:
+
+- the conclusion;
+- explicit premises;
+- suppressed premises;
+- intermediate conclusions;
+- inferential links;
+- evidence for each major premise;
+- objections and replies;
+- remaining pressure points.
+
+Premise-conclusion reconstruction is useful when it clarifies the argument. It should not be forced onto historical, interpretive, empirical, or methodological papers when another structure better captures the paper.
+
+## Step 7: Check Concepts and Evidence
+
+For central concepts, Codex should ask:
+
+- What does the term mean in this paper?
+- Why does the author introduce it?
+- What argumentative work does it perform?
+- Is it exhaustive, exclusive, stable, or contested?
+- What nearby concept should it not be confused with?
+- Does the author's usage differ from standard or neighboring uses?
+
+For evidence, Codex should separate:
+
+- logical support;
+- conceptual support;
+- empirical support;
+- textual or historical support;
+- methodological support;
+- unsupported assertion;
+- second-hand report requiring verification.
+
+## Step 8: Place the Paper Relationally
+
+A good report explains the paper's place in a debate. It should identify:
+
+- the problem or earlier position to which the paper responds;
+- allies, targets, and competitors;
+- the paper's intervention;
+- what changes after the intervention;
+- what remains unresolved;
+- which broader literature review or historical narrative it belongs to.
+
+Do not replace this with a neutral author list. If the paper gives a history of a debate, cite it as the paper's own narrative and mark second-hand claims until original sources are checked.
+
+## Step 9: Screen the Bibliography
+
+Bibliography screening should prioritize references that:
+
+- defend, attack, or clarify the main thesis;
+- supply recurring distinctions or cases;
+- represent major positions;
+- provide foundational sources;
+- constitute important recent interventions;
+- are repeatedly relied on by the analyzed paper;
+- are likely to affect the user's project.
+
+Separate verified sources from follow-up leads. Never use an unread bibliography item as independent support.
+
+## Step 10: Handle Project Handoffs Safely
+
+When project context exists, the report may propose handoff candidates:
+
+- possible project role;
+- priority;
+- where the paper might be used;
+- how to use it;
+- how not to use it;
+- verification tasks before citation or file updates.
+
+These are candidates, not completed updates. Codex should not edit argument maps, notes, bibliographies, reading lists, literature review files, or project memory unless the user explicitly authorizes those edits or provides a local workflow that authorizes them.
+
+## Report Templates
+
+### Thorough report
+
+```markdown
+# Author (Year): Short Title
+
+## 1. Metadata
+**Reference:** [Complete citation]
+**Version status:**
+**Source file:**
+**Source access status:**
+**Selectable-text reliability:**
+**Pagination reliability:**
+**Relevant non-body materials:**
+**Reading status:** Thorough reading
+
+## 2. Project Relevance Rating
+## 3. Relations to the Project and Previous Literature
+## 4. Concepts, Question, Thesis, and Dialectical Target
+## 5. Arguments and Checks
+## 6. Evidence and Evidence Check
+## 7. Strongest Objection and Reply
+## 8. Contribution and Historical Placement
+## 9. Bibliography Screening
+### Verified Sources Worth Using
+### Follow-Up Leads Requiring Verification
+## 10. Problems and Open Questions
+## 11. Project Handoff Candidates
+```
+
+### Concise triage
+
+```markdown
+# Author (Year): Short Title
+
+## Metadata
+**Reference:** [Complete citation]
+**Version status:**
+**Source file:**
+**Source access status:**
+**Selectable-text reliability:**
+**Pagination reliability:**
+**Reading status:** Coarse survey and relevance triage
+
+## Relevance Rating
+## Gist
+## Limited Project Relevance
+## References Worth Following
+## Open Questions
+## Project Handoff Candidates
+```
+
+### Provisional analysis
+
+```markdown
+# Provisional Analysis: Author (Year): Short Title
+
+## Metadata
+**Reference:** [Complete citation if available]
+**Source access status:** [abstract/excerpt/metadata/notes only]
+**Reading status:** Provisional; limited to supplied material
+
+## What Can Responsibly Be Said
+## What Cannot Yet Be Claimed
+## Likely Question, Thesis, or Topic
+## Possible Project Relevance
+## Verification Needed
+## Project Handoff Candidates
+```
+
+## Quality Checklist
+
+Before finishing, Codex should verify:
+
+- source access status is accurate;
+- reading status is coarse, provisional, or thorough;
+- relevance rating has a concrete project-based rationale when project context exists;
+- thesis and dialectical target are precise and charitable;
+- major arguments are reconstructed rather than merely summarized;
+- every major premise is connected to its support;
+- logical, content, and evidence checks remain distinct;
+- page citations and metadata are accurate where available;
+- bibliographic information appears once in the Metadata citation;
+- no separate final `References` section duplicates the analyzed paper's citation;
+- author's claims, other sources' claims, analyst assessment, and project commitments remain separate;
+- bibliography recommendations are screened and unread leads are labeled;
+- handoff candidates do not pretend to be completed file updates;
+- no unauthorized file updates were performed.
+
+## Building a Private Project Extension
+
+For a full research workflow, keep this public skill general and create a separate private extension. The extension should supply project context, relevance criteria, file paths, templates, and write permissions.
+
+Recommended layout:
 
 ```text
 project-paper-analysis/
